@@ -1,0 +1,93 @@
+{% extends 'groups/group_base.html' %}
+{% block pregroup %}
+{% load static %}
+   
+
+<div style="margin: 10px;">
+</div>
+
+
+<div class="col-lg-4" style="background-color: rgba(235, 235, 235, 0.488); backdrop-filter:blur(2px); padding: 1em;">
+    <div class="content">
+        {% if user.is_authenticated %}
+        <h2 style="margin: 1em 0em;">
+            Welcome Back
+            <a href="{% url 'posts:for_user' username=user.username %}" 
+               style="text-decoration: none; color: darkblue; font-weight: bold;">
+                {{user.username}}!
+            </a>
+        </h2>
+        {% endif %}
+        <h2>Groups</h2>
+        <hr>
+        <p><h5> Welcome to the groups page! </h5></p>
+
+    </div>
+    {% if user.is_authenticated %}
+    <a href="{% url 'groups:create' %}" class="btn btn-success" style="box-shadow: -5px 5px 10px lightgrey">
+        <span class=''>Create Your New Group</span>
+    </a>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+
+{% block group_content %}
+
+<div class="col-lg-8 blurry" >
+    <div class="list-group">
+        {% for group in object_list %}
+        <a href="{% url 'groups:single' slug=group.slug %}" class="group-list-item link-color">
+            <h3 class="title list-group-item-heading">
+                &nbsp;{{group.name}}
+            </h3>
+            <div class="list-group-item-text container-fluid">   
+               <h5> Group description: </h5> {{group.g_description_html|safe}}
+                <div class="row" style="margin:0em;">
+                <div class="col-md-3" style="margin:0px; padding: 0px;">
+                members:  {{ group.members.count }}
+                </div>
+                <div class="col-md-3">
+                  
+                posts:  {{ group.posts.count}}
+                </div>
+                </div>
+
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+<!-- Display pagination links -->
+<div class="pagination" >
+<hr> 
+    &nbsp;
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a class="group-page-box" href="?page=1"> first</a>
+            <a class="group-page-box" 
+            href="?page={{ page_obj.previous_page_number }}"><</a>
+        {% endif %}
+        Page no:   
+        <span class="current-page">{{ page_obj.number }}</span>
+
+        {% if page_obj.has_next %}
+            <a class="group-page-box" href="?page={{ page_obj.next_page_number }}">></a>
+            <a class="group-page-box" href="?page={{ page_obj.paginator.num_pages }}">last </a>
+        {% endif %}
+    </span>
+<hr>
+</div>
+<br>
+</div>
+
+
+
+<div style="height: 100%; width: 100%; padding:1em; ">
+    <img class="group-list-img" style="" 
+    src="{% static 'socialapp/images/group_bg_img5.jpg' %}">  
+    <div> 
+
+
+{% endblock %}

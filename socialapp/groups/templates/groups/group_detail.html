@@ -1,0 +1,47 @@
+{% extends 'groups/group_base.html' %}
+{% block pregroup %}
+  
+<h1> {{group.name}} </h1>
+<h2> member count: {{group.members.count}} </h2>
+
+<div class="content">
+  {% if user in group.members.all %}
+    <a href="{% url 'groups:leave' slug=group.slug %}" class="btn btn-warning">
+        <span>Leave this group</span>
+    </a>
+    &nbsp;
+    <a class="btn btn-outline-dark" href="{% url 'posts:create' %}">Post</a>
+    &nbsp;
+    {% if user.is_authenticated and user.is_superuser and not hide_delete %}  <!--  -->
+				<a href="{% url 'groups:delete' slug=group.slug %}" title="delete" class="btn btn-outline-danger">
+					<span class="icon-label">Delete this group</span>
+				</a>
+   	{% endif %}
+    <br> <hr>
+   
+  {% else %}
+    <a href="{% url 'groups:join' slug=group.slug %}" class="btn btn-success">
+        <span>Join this group</span>
+    </a>
+    <br> <hr>
+  {% endif %}
+</div>
+{% endblock pregroup %}
+
+
+<br>
+{% block group_content %}
+<div class="col-lg-8" >
+    {% if group.posts.count == 0 %}
+        <h3>No posts in this group yet!</h3>
+    {% else %}
+
+       {% for post in group.posts.all %}
+          {% include 'posts/post_reference.html' %}
+       {% endfor %}
+
+    {% endif %}
+</div>
+
+
+{% endblock %}

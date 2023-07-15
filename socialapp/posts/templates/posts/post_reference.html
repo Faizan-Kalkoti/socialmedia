@@ -1,0 +1,36 @@
+{% load static %}
+<div class="post-single post media ">
+	<h3>{{ post.message_html|safe }}</h3>
+	   <div><strong>by {{ post.user.username }}</strong> 
+		&nbsp;
+		<span class="liked-post"> liked: {{post.liked_users.count}}  </span>
+		{% if user in group.members.all %}
+		  <a class="liked-post" href="{% url 'posts:post_like' pk=post.pk slug=group.slug %}"> 
+			<img class="liked" style="height:1.3em; width:1.3em; text-decoration: none;  transform:translateY(-2px);"
+			 src="{% static 'socialapp/images/like.png' %}" alt="like"> </a>
+		{% endif %}
+	   </div>	
+
+		<h6 class="media-heading">
+			<!-- {% comment %} <span class="username">
+                <a href="{% url 'posts:for_user' username=post.user.username %}" 
+                   style="text-decoration: none;">
+                    @{{ post.user.username }} &nbsp;
+                </a>
+            </span> {% endcomment %} -->
+			<time class="time">
+                <a href="{% url 'posts:single' username=post.user.username pk=post.pk %}" 
+				   class="link-color">
+                    {{ post.created_at }}
+                </a>
+            </time>
+		</h6>
+
+		<div class="media-footer">
+			{% if user.is_authenticated and post.user == user and user in group.members.all and not hide_delete %}  <!--  -->
+				<a href="{% url 'posts:delete' pk=post.pk %}" title="delete" class="btn btn-outline-danger">
+					<span class="icon-label">Delete</span>
+				</a>
+			{% endif %}
+		</div>
+</div>

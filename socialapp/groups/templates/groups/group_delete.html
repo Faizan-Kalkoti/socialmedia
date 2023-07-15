@@ -1,0 +1,17 @@
+{% extends 'groups/group_base.html' %}
+{% block pregroup %}
+
+<form method="POST">
+	{% csrf_token %}
+	<input type="submit" value="Confirm Delete" class="btn btn-danger btn-large">
+	<a href="{% url 'groups:single' slug=object.slug %}" 
+       class="btn btn-outline-secondary btn-large">Cancel</a>
+</form>
+
+{% if user.is_authenticated and group.name == user and not hide_delete %}  <!--  -->
+<a href="{% url 'groups:delete' pk=post.pk %}" title="delete" class="btn btn-outline-danger">	
+    <span class="icon-label">Delete</span>
+</a>
+{% endif %}
+
+{% endblock %}

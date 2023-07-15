@@ -1,0 +1,19 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container" style="padding: 1em;">
+<img style="width: 200px; height: 200px; border-radius: 50%;
+            border: 2px solid black; box-shadow: 0px 0px 10px black;"
+ src="{{user.profile_pic.url}}" alt="image">
+<br><br>
+<h3>Username:  {{user1.username}}  </h3>
+<strong>Email: </strong> {{ user1.email}} <br>
+<strong>Description: </strong> {{ user.user_description}}
+
+<br> <hr>
+</div>
+
+
+{% endblock content %}
