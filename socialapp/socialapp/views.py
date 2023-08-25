@@ -25,7 +25,7 @@ class TestPage(LoginRequiredMixin, TemplateView):
 
 
 class ThanksPage(TemplateView):
-    template_name='thanks.html'
+    template_name='index.html'
 
 @login_required
 def myview(request): 

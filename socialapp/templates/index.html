@@ -2,7 +2,53 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div style="background:linear-gradient(rgb(224, 228, 234),rgb(224, 228, 234) , white) ; position: absolute; z-index: -2; width: 100%; margin: 0px;">
 
-<h1> This is a social Media website</h1>
+
+
+<!-- <h1> This is a social Media website</h1> -->
+
+<div class="row rw" style="display: flex; flex-direction: row; justify-content: center; margin: 0px;">
+    <div style="position: absolute; background-color: #AF9FA5; padding: 14em; z-index: -1; clip-path: polygon(0 0, 100% 0, 100% 100%);"></div>
+</div>
+<div style="padding: 1em;"></div>
+<div class="row rw" >
+<div class="col-lg-6" style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+    <img  style="width: 35em; height: 33em; padding: 1em;"
+    class="firstimage" src="{% static 'socialapp/images/social_media_home.png' %}" alt="boy">
+</div>
+<div class="col-lg-6" style="">
+    <div style="padding: 2em 3em; display: flex; justify-content: center; align-items: center;">
+        <div style="padding: 1em; background: rgba(240, 240,240,0.5); border-top: 2px solid white;
+                    border-right: 2px solid white;
+                    border-radius: 1em; backdrop-filter: blur(18px); box-shadow: -3em 3em 2em rgba(130, 130, 130, 0.474)">
+
+          <div style="font-weight: 600; color: white; font-size: 4em;
+          text-shadow: -3px 3px 8px rgb(87, 87, 87); text-align: right; padding:0.4em;">
+          Network <br> 
+          With <br>
+          your friends<br>
+          </div>
+          <div style="display: flex; flex-direction: row; justify-content: right; padding:1em 0em; padding-left: 1em;">
+            <a style="text-decoration: none;" href="{% url 'groups:all' %}">
+            <button class="btn btn-outline-dark btns" style="font-size: 2em; font-weight: 600; background-color: rgb(75, 52,50); color: whitesmoke;">Check out the groups</button></a>
+            
+            {% if user.is_authenticated %}
+            <a style="text-decoration: none;" href="{% url 'accounts:logout' %}"> 
+            <button class="btn btn-outline-dark btns" style="font-weight: 600; margin: 0em 1em; font-size: 2em; background-color: rgb(126, 156, 143);">
+            Logout</button></a>
+                {% else %} 
+                <a style="text-decoration: none;" href="{% url 'accounts:login' %}"> 
+                <button class="btn btn-outline-dark btns" style="font-weight: 600; margin: 0em 1em; font-size: 2em; background-color: rgb(126, 156, 143);">
+                Login </button></a>
+                {% endif %}
+          </div>
+      </div>
+      
+    </div> 
+</div>
+</div>
+
+</div>
 
 {% endblock content %}
