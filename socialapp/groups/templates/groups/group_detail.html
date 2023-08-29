@@ -1,10 +1,17 @@
 {% extends 'groups/group_base.html' %}
 {% block pregroup %}
+{% load static%}
   
+<div style="padding: 1em; position: absolute; width: 85%; margin: 0px; z-index: -1;">
+  <img style="height: 35em; width: 100%;" src="{{group.group_img.url}}" alt="">
+</div>
+
+<div style="background-color: rgba(240, 248, 255, 0.753); padding: 2em; margin: 1em; backdrop-filter: blur(3px);
+height: 36em; border: 1px solid rgb(107, 107, 107); border-radius: 1em; overflow:hidden;">
 <h1> {{group.name}} </h1>
 <h2> member count: {{group.members.count}} </h2>
 
-<div class="content">
+<div class="content"> 
   {% if user in group.members.all %}
     <a href="{% url 'groups:leave' slug=group.slug %}" class="btn btn-warning">
         <span>Leave this group</span>
@@ -17,31 +24,65 @@
 					<span class="icon-label">Delete this group</span>
 				</a>
    	{% endif %}
-    <br> <hr>
-   
+    <br> 
+    
   {% else %}
+
+
     <a href="{% url 'groups:join' slug=group.slug %}" class="btn btn-success">
         <span>Join this group</span>
     </a>
-    <br> <hr>
+    <br> 
   {% endif %}
+  <hr>
 </div>
 {% endblock pregroup %}
 
 
 <br>
 {% block group_content %}
-<div class="col-lg-8" >
+<div class="col-lg-8" style=" overflow-y: scroll; height:23em; padding: 1em 3em;">
     {% if group.posts.count == 0 %}
         <h3>No posts in this group yet!</h3>
     {% else %}
 
        {% for post in group.posts.all %}
-          {% include 'posts/post_reference.html' %}
+          <!-- {% comment %} {% include 'posts/post_reference.html' %}{% endcomment %} --> 
+          <!--code for a single post-->
+          <div class="post-single post media " style='margin:1em 0em; '>
+            <h3>{{ post.message_html|safe }}</h3>
+               <div><strong>by {{ post.user.username }}</strong> 
+              &nbsp;
+              <span class="liked-post"> liked: {{post.liked_users.count}}  </span>
+              {% if user in group.members.all %}
+                <a class="liked-post" href="{% url 'posts:post_like' pk=post.pk slug=group.slug %}"> 
+                <img class="liked" style="height:1.3em; width:1.3em; text-decoration: none;  transform:translateY(-2px);"
+                 src="{% static 'socialapp/images/like.png' %}" alt="like"> </a>
+              {% endif %}
+               </div>	
+          
+              <h6 class="media-heading">
+                <time class="time">
+                          <a href="{% url 'posts:single' username=post.user.username pk=post.pk %}" 
+                     class="link-color">
+                              {{ post.created_at }}
+                          </a>
+                      </time>
+              </h6>
+          
+              <div class="media-footer">
+                {% if user.is_authenticated and post.user == user and user in group.members.all and not hide_delete %}  <!--  -->
+                  <a href="{% url 'posts:delete' pk=post.pk %}" title="delete" class="btn btn-outline-danger">
+                    <span class="icon-label">Delete</span>
+                  </a>
+                {% endif %}
+              </div>
+          </div>
        {% endfor %}
 
     {% endif %}
 </div>
 
+</div>
 
 {% endblock %}
