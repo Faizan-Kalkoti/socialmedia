@@ -12,12 +12,6 @@
 	   </div>	
 
 		<h6 class="media-heading">
-			<!-- {% comment %} <span class="username">
-                <a href="{% url 'posts:for_user' username=post.user.username %}" 
-                   style="text-decoration: none;">
-                    @{{ post.user.username }} &nbsp;
-                </a>
-            </span> {% endcomment %} -->
 			<time class="time">
                 <a href="{% url 'posts:single' username=post.user.username pk=post.pk %}" 
 				   class="link-color">

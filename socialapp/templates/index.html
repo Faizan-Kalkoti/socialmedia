@@ -37,11 +37,11 @@
             <a style="text-decoration: none;" href="{% url 'accounts:logout' %}"> 
             <button class="btn btn-outline-dark btns" style="font-weight: 600; margin: 0em 1em; font-size: 2em; background-color: rgb(126, 156, 143);">
             Logout</button></a>
-                {% else %} 
+            {% else %} 
                 <a style="text-decoration: none;" href="{% url 'accounts:login' %}"> 
                 <button class="btn btn-outline-dark btns" style="font-weight: 600; margin: 0em 1em; font-size: 2em; background-color: rgb(126, 156, 143);">
                 Login </button></a>
-                {% endif %}
+            {% endif %}
           </div>
       </div>
       

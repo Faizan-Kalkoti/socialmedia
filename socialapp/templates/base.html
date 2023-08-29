@@ -37,6 +37,35 @@
     transition: 2s;
     }
 
+    .login-btn-pg{
+      background: linear-gradient( #5b5457,#5b5457);
+      transition: 0.4s;
+    }
+
+    .login-btn-pg:hover{
+      Scale: 1.1;
+      transition: 1s;
+    }
+
+    .background-image-class {
+      background-image: url("{% static 'socialapp/images/login_bg.jpg' %}");
+      background-repeat: no-repeat;
+      /* Other CSS properties for styling */
+  }
+
+  .user_background-img{
+    background-image: url("{% static 'socialapp/images/user_bg2.jpg' %}");
+    background-repeat: no-repeat;
+    width:100%;
+    position: absolute;
+    z-index: -2;
+    background-size: cover;
+    height: 100%;
+    margin: 0px;
+    padding: 0em;
+  }
+  
+
     </style>
   </head>
   

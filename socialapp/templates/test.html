@@ -3,20 +3,110 @@
 {% block content %}
 {% load static %}
 
-<h1 style="padding: 0.5em 1em;"> Your are now Logged in!</h1>
+<!-- <h1 style="padding: 0.5em 1em;"> Your are now Logged in!</h1> -->
+
+<div class="userbg" style="position: absolute; 
+background: rgb(72, 72, 72);
+padding: 5em; width: 100%; margin: 0px; z-index: -1;">
+<!-- box-shadow: 10px 0px 2em rgb(43, 43, 43) -->
+</div>
+
+<div class="user_background-img"> </div>
+<div class="row" style="margin: 0px;">
+
+   <div class="col-lg-6" style="margin: 0px; padding: 4em;">
+   <div class="row" style="margin: 0px;"> 
+    <div class="col-lg-8" style="">
+        <div class="container" style="padding: 0em;">
+
+            <img style="width: 200px; height: 200px; border-radius: 50%; background-color: white;
+                         box-shadow: 0px 0px 2em black; border: 3px solid rgb(73, 73, 73);"
+             src="{{user2.profile_pic.url}}" alt="image">
+            <br><br>
+            <div style="font-size: 1.2em;"> 
+            <h3 style="text-shadow: -3px 3px 5px rgb(74, 74, 74); font-weight: 700; font-size: 1.9em;
+            color: rgb(35, 35, 35)">Welcome, {{user1.username}}  </h3>
+            <strong>Email: </strong> {{ user1.email}} <br>
+            <strong>Description: </strong> {{ user2.user_description}}
+            </div>
+            <br>      
+        </div> 
+    </div>
+    <div class="col-lg-4" style="margin: 0px; display: flex; justify-content: right; align-items: center;">
+        <img style="height: 15em;" src="{% static 'socialapp/images/socialmed.png' %}" alt="">
+    </div>
+    <hr style="border: 2px solid black;">
+    <div class="row" style="margin: 0px;">
+        <a class="btn btn-dark"  style="font-size: 1.2em;" href="{% url 'groups:create' %}">
+            Create your group!
+        </a>
+        <br>
+        <div class="col-lg-6">
+            <div class="row" style="margin: 0px; padding: 1em 0em;">
+                <a href="{% url 'groups:all' %}" style="font-size: 1.2em;" class="btn btn-success">Check out some groups</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row" style="margin: 0px; padding: 1em 0em;">
+            <a href="{% url 'accounts:logout' %}" style="font-size: 1.2em;" class="btn btn-danger">Logout</a></div>
+        </div>
+    </div>
+   </div>
+        
+    </div>
+    <div class="col-lg-6" style="margin: 0px; padding: 2em;">
+      <div style="background-color: rgba(255, 255, 255, 0.528); padding: 2em; border-radius: 1em;
+      backdrop-filter: blur(6px); border-top: 2px solid white; border-right:1px solid white; box-shadow: -5px 5px 2em rgba(143, 143, 143, 0.557);
+      box-shadow: -20px 20px 2em rgb(75, 75, 75, 0.6);">
+        <div style="text-align: center;">
+            <button style="font-size: 1.3em;" class="btn btn-secondary" id="user-posts">Your posts</button> &nbsp;
+            <button style="font-size: 1.3em;" class="btn btn-warning" id="user-groups">Your groups</button>
+        </div> <hr>
+        <div id="display-data" style="scroll-behavior: auto; height: 30em; overflow-y: auto;
+         padding: 0.5em;">
+            <!-- {{user_posts.count}} -->
+        </div>
+      </div>
+    </div>
+</div>
 
 
-<div class="container" style="padding: 1em;">
-    <img style="width: 200px; height: 200px; border-radius: 50%;
-                border: 2px solid black; box-shadow: 0px 0px 10px black;"
-     src="{{user2.profile_pic.url}}" alt="image">
-    <br><br>
-    <h3>Username:  {{user1.username}}  </h3>
-    <strong>Email: </strong> {{ user1.email}} <br>
-    <strong>Description: </strong> {{ user2.user_description}}
-    
-    <br> <hr>
-   
-    </div> 
+
+<script>
+    let userdata = document.getElementById('display-data');
+    let postbtn = document.getElementById("user-posts");
+    let groupbtn = document.getElementById("user-groups");
+    var pn = Number('{{user_posts.count}}');
+    var gn = Number('{{user_groups.count}}');
+    postbtn.addEventListener("click", ()=>{
+        userdata.innerHTML = ` <h3 style="padding:0.3em; text-align: center;"> Your have {{user_posts.count}} number of posts </h3>
+        {% for post in user_posts %}
+    <div class="post-single post media">
+      <h4>{{post.message_html|safe}} </h4>
+	   <strong>by {{ post.user.username }}</strong> 
+		&nbsp;
+		<span class="liked-post"> liked: {{post.liked_users.count}}  </span>	
+
+		<h6 class="media-heading">
+			<time class="time">
+                    <div class="link-color">
+                    {{ post.created_at }} </div>
+            </time>
+		</h6>
+    </div>
+{% endfor %}`;
+    })
+    groupbtn.addEventListener("click", ()=>{
+        userdata.innerHTML = `
+        <h3 style="text-align: center; padding:1em; padding-top: 0.2em;">You are a part of {{user_groups.count}} groups! </h3>
+        {% for group in user_groups %}
+        <div style="background: linear-gradient(whitesmoke, lightblue); padding: 0.5em; margin: 0.5em;
+        border: 1px solid grey; border-radius: 0.5em;" >
+        <h4>{{group.name}}</h4>
+        members: {{group.members.count}}</div>
+        {% endfor %}`;
+    })
+</script>
+
 
 {% endblock content %}

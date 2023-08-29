@@ -5,13 +5,21 @@
 {% block content %}
 
 <div class="container">
-    <h1>Login</h1>
-    <form method="POST" >
+    <div class="background-image-class" style="display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 4em; margin: 1em;">
+    <div style="border: 1px solid rgb(105, 105, 105); border-radius: 1em; padding: 3em 4em;  background-color: rgba(228, 228, 228, 0.603); backdrop-filter: blur(5px);">
+      <h2 style="text-align: center;">USER LOGIN</h2>
+      <br>
+      <form method="POST" >
         {% csrf_token %}
         {% bootstrap_form form %}
-        <input type="submit" class="btn btn-secondary" value="Login">
-    </form>
-
+        <div style="text-align: center;">
+            Don't have an account? <a href="{% url 'accounts:signup' %}" style="text-decoration: none;"> sign up</a> <br><br>
+            <input type="submit" class="btn btn-outline-dark login-btn-pg" style="font-size: 1.2em; color:white; font-weight: 600;" value="Login">
+        </div>
+      </form>
+    </div>
+    </div>
 </div>
 
 

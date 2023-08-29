@@ -69,6 +69,7 @@ class CreatePost(LoginRequiredMixin, SelectRelatedMixin, CreateView):
     fields =('message', 'group')
     select_related = ('user', 'group')
     model = models.Post
+    # success_url = reverse_lazy('groups:single')
 
     def form_valid(self,form):
         self.object = form.save(commit =False)
